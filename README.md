@@ -1,4 +1,6 @@
 # milkv-mars-os
+### Setup
+<pre>rustup target add riscv64gc-unknown-none-elf</pre>
 
 ### Test
 Update and Install QEMU
