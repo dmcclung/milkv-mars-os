@@ -15,3 +15,18 @@ Test kernel
 - Emulates a generic RISC-V virt board.
 - nographic: Uses serial console output.
 - smp 4: Simulates 4 cores like the Milk-V Mars.
+
+
+### Working with qemu
+
+<pre>qemu-system-riscv64 \
+  -machine virt \
+  -smp 4 \
+  -m 4G  \
+  -nographic \
+  -bios /usr/lib/riscv64-linux-gnu/opensbi/generic/fw_jump.elf \
+  -kernel /usr/lib/u-boot/qemu-riscv64_smode/uboot.elf \
+  -device virtio-net-device,netdev=net0 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -drive file=Fedora-Server-Host-Generic-42.20250911-2251ba41cdd3.riscv64.raw,format=raw,if=virtio
+</pre>
