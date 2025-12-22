@@ -16,15 +16,14 @@ Test kernel
 - nographic: Uses serial console output.
 - smp 4: Simulates 4 cores like the Milk-V Mars.
 
-
 ### Fedora riscv images
 - https://images.fedoravforce.org/Mars
 - https://fedoraproject.org/wiki/Architectures/RISC-V/QEMU
 - https://dl.fedoraproject.org/pub/alt/risc-v/release/42/Server/riscv64/images/
 
-
 ### Working with qemu
-
+<pre>unxz Fedora-Server-Host-Generic-42.20250911-2251ba41cdd3.riscv64.raw.xz</pre>
+<pre>sudo apt install opensbi u-boot-qemu qemu-system-riscv64</pre>
 
 <pre>qemu-system-riscv64 \
   -machine virt \
