@@ -41,3 +41,7 @@ Test kernel
 Username: fedora
 Password: linux
 </pre>
+
+### WSL with fedora 43
+<pre>sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
+sudo systemctl restart systemd-binfmt</pre>
