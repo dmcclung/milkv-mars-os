@@ -1,6 +1,17 @@
 [package]
-name = "milkv-mars-os"
+name = "milkv_mars_os"
 version = "0.1.0"
 edition = "2024"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[[bin]]
+name = "milkv_mars_os"
+test = false
+bench = false
 
 [dependencies]

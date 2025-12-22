@@ -1,6 +1,7 @@
 # milkv-mars-os
 ### Setup
 <pre>rustup target add riscv64gc-unknown-none-elf</pre>
+<pre>cargo build --target riscv64gc-unknown-none-elf</pre>
 
 ### Test
 Update and Install QEMU
@@ -45,3 +46,14 @@ Password: linux
 ### WSL with fedora 43
 <pre>sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
 sudo systemctl restart systemd-binfmt</pre>
+
+<pre>
+qemu-system-riscv64 \
+  -machine virt \
+  -smp 4 \
+  -m 4G \
+  -nographic \
+  -device virtio-net-device,netdev=net0 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -drive file=Fedora-Server-Host-Generic-42.20250911-2251ba41cdd3.riscv64.raw,format=raw,if=virtio
+</pre>
