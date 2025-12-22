@@ -23,6 +23,7 @@ Test kernel
 - https://dl.fedoraproject.org/pub/alt/risc-v/release/42/Server/riscv64/images/
 
 ### Working with qemu
+This is for Fedora Server 42 with EFI in older qemu-riscv
 <pre>unxz Fedora-Server-Host-Generic-42.20250911-2251ba41cdd3.riscv64.raw.xz</pre>
 <pre>sudo apt install opensbi u-boot-qemu qemu-system-riscv64</pre>
 
@@ -44,6 +45,8 @@ Password: linux
 </pre>
 
 ### WSL with fedora 43
+<pre>sudo dnf install qemu-system-riscv qemu-system-riscv-core</pre>
+
 Fedora 43 supports the riscv boards like the visionfive2 more easily with the latest qemu
 <pre>sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
 sudo systemctl restart systemd-binfmt</pre>
