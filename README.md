@@ -44,8 +44,14 @@ Password: linux
 </pre>
 
 ### WSL with fedora 43
+Fedora 43 supports the riscv boards like the visionfive2 more easily with the latest qemu
 <pre>sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
 sudo systemctl restart systemd-binfmt</pre>
+
+<pre>
+sudo truncate -s 32M /usr/share/edk2/riscv/RISCV_VIRT_CODE.fd
+cp /usr/share/edk2/riscv/RISCV_VIRT_VARS.fd my-fedora-riscv-vars.fd
+truncate -s 32M my-fedora-riscv-vars.fd</pre>
 
 <pre>
 qemu-system-riscv64 \
@@ -53,7 +59,11 @@ qemu-system-riscv64 \
   -smp 4 \
   -m 4G \
   -nographic \
+  -drive if=pflash,format=raw,unit=0,file=/usr/share/edk2/riscv/RISCV_VIRT_CODE.fd,readonly=on \
+  -drive if=pflash,format=raw,unit=1,file=my-fedora-riscv-vars.fd \
   -device virtio-net-device,netdev=net0 \
   -netdev user,id=net0,hostfwd=tcp::2222-:22 \
   -drive file=Fedora-Server-Host-Generic-42.20250911-2251ba41cdd3.riscv64.raw,format=raw,if=virtio
 </pre>
+
+Booting Fedora Server 42 requires EFI in qemu. Booting a custom kernel can be done straight from OpenSBI
