@@ -36,3 +36,6 @@ Test kernel
   -netdev user,id=net0,hostfwd=tcp::2222-:22 \
   -drive file=Fedora-Server-Host-Generic-42.20250911-2251ba41cdd3.riscv64.raw,format=raw,if=virtio
 </pre>
+
+<pre>Username: fedora</pre>
+<pre>Password: linux</pre>
