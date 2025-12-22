@@ -17,7 +17,14 @@ Test kernel
 - smp 4: Simulates 4 cores like the Milk-V Mars.
 
 
+### Fedora riscv images
+<pre>https://images.fedoravforce.org/Mars</pre>
+<pre>https://fedoraproject.org/wiki/Architectures/RISC-V/QEMU</pre>
+<pre>https://dl.fedoraproject.org/pub/alt/risc-v/release/42/Server/riscv64/images/</pre>
+
+
 ### Working with qemu
+
 
 <pre>qemu-system-riscv64 \
   -machine virt \
