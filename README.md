@@ -18,9 +18,9 @@ Test kernel
 
 
 ### Fedora riscv images
-<pre>https://images.fedoravforce.org/Mars</pre>
-<pre>https://fedoraproject.org/wiki/Architectures/RISC-V/QEMU</pre>
-<pre>https://dl.fedoraproject.org/pub/alt/risc-v/release/42/Server/riscv64/images/</pre>
+- https://images.fedoravforce.org/Mars
+- https://fedoraproject.org/wiki/Architectures/RISC-V/QEMU
+- https://dl.fedoraproject.org/pub/alt/risc-v/release/42/Server/riscv64/images/
 
 
 ### Working with qemu
