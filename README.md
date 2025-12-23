@@ -64,6 +64,8 @@ Expected output:
 Hello from my rust kernel on JH7110
 </pre>
 
+Exit qemu with `ctrl + a` then `x`
+
 #### Notes
 On Fedora 43 in wsl, I see this issue where WSL interop stops working after a reboot. You can fix it by running the following commands:
 ````

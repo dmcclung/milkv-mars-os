@@ -4,11 +4,13 @@
 #![no_main]
 
 const UART0: usize = 0x10000000;
-const LSR_OFFSET: usize = 5; // Line Status Register
+const LSR_OFFSET: usize = 5; // Line status register offset
 
 fn putc(c: u8) {
     unsafe {
-        // Wait until THRE (bit 5) is set
+        // Wait until the Transmitter Holding Register (THRE) is empty
+        // 1 = transmitter is ready
+        // 0 = transmitter is busy
         while (core::ptr::read_volatile((UART0 + LSR_OFFSET) as *const u8) & (1 << 5)) == 0 {
             core::arch::asm!("nop");
         }
@@ -18,6 +20,9 @@ fn putc(c: u8) {
 
 fn print(s: &str) {
     for byte in s.bytes() {
+        if byte == b'\n' {
+            putc(b'\r');
+        }
         putc(byte);
     }
 }
@@ -37,7 +42,7 @@ pub extern "C" fn _start() -> ! {
     }
 
     if hartid == 0 {
-        print("Hello from my rust kernel on JH7110");
+        print("Hello from my rust kernel on JH7110\n");
     }
 
     loop {}
