@@ -36,14 +36,20 @@ but I think I know how to do it. That is the next TODO.
 I'm using Fedora 43 in WSL so all the commands make that assumption, unless otherwise stated.
 
 Install qemu
-<pre>sudo dnf update</pre>
-<pre>sudo dnf install qemu-system-riscv qemu-system-riscv-core</pre>
-<pre>qemu-system-riscv64 --version</pre>
+````
+sudo dnf update
+````
+````
+sudo dnf install qemu-system-riscv qemu-system-riscv-core
+````
+````
+qemu-system-riscv64 --version
+````
 
 The kernel for now only works in Machine mode and simply prints out a Hello World message. You can run the kernel with or without OpenSBI.
 A TODO for me is to figure out how to build an OpenSBI + Uboot package with the kernel. The command below skips OpenSBI `-bios none`
 
-<pre>
+````
 qemu-system-riscv64 \
   -machine virt \
   -smp 4 \
@@ -51,7 +57,7 @@ qemu-system-riscv64 \
   -nographic \
   -bios none \
   -kernel target/riscv64gc-unknown-none-elf/release/milkv_mars_os
-</pre>
+````
 
 Expected output:
 <pre>
@@ -60,7 +66,9 @@ Hello from my rust kernel on JH7110
 
 #### Notes
 On Fedora 43 in wsl, I see this issue where WSL interop stops working after a reboot. You can fix it by running the following commands:
-<pre>
+````
 sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf'
+````
+````
 sudo systemctl restart systemd-binfmt
-</pre>
+````
