@@ -3,6 +3,25 @@
 #![no_std]
 #![no_main]
 
+const UART0: usize = 0x10000000;
+const LSR_OFFSET: usize = 5; // Line Status Register
+
+fn putc(c: u8) {
+    unsafe {
+        // Wait until THRE (bit 5) is set
+        while (core::ptr::read_volatile((UART0 + LSR_OFFSET) as *const u8) & (1 << 5)) == 0 {
+            core::arch::asm!("nop");
+        }
+        core::ptr::write_volatile(UART0 as *mut u8, c);
+    }
+}
+
+fn print(s: &str) {
+    for byte in s.bytes() {
+        putc(byte);
+    }
+}
+
 use core::panic::PanicInfo;
 
 #[panic_handler]
@@ -12,6 +31,14 @@ fn panic(_info: &PanicInfo) -> ! {
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
+    let hartid: usize;
+    unsafe {
+        core::arch::asm!("csrr {0}, mhartid", out(reg) hartid);
+    }
+
+    if hartid == 0 {
+        print("Hello from my rust kernel on JH7110");
+    }
+
     loop {}
 }
-
