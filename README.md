@@ -40,7 +40,7 @@ Install qemu
 sudo dnf update
 ````
 ````
-sudo dnf install qemu-system-riscv qemu-system-riscv-core
+sudo dnf install qemu-system-riscv
 ````
 ````
 qemu-system-riscv64 --version
