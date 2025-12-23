@@ -3,11 +3,11 @@ ENTRY(_start)
 
 SECTIONS
 {
-    /* Set the link address to QEMU virt DRAM base */
+    /* Where my kernel starts */
     . = 0x80000000;
 
     .text : {
-        *(.text.init)       /* Optional: boot code */
+        *(.text.init)       /* _start needs to be first */
         *(.text*)
     }
 
@@ -23,7 +23,7 @@ SECTIONS
         *(.bss*)
     }
 
-    /* Discard debug sections if needed */
+    /* Discard debug sections */
     /DISCARD/ : {
         *(.debug*)
         *(.comment*)
