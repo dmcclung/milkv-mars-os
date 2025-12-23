@@ -1,12 +1,22 @@
 # milkv-mars-os
 
-<pre>https://milkv.io/docs/mars/overview</pre>
+[Overview of the Milk-V Mars](https://milkv.io/docs/mars/overview)
+
+My goal with this hobby os is to learn Rust and the RISC-V architecture. I purchased the Mars 
+awhile back when it came out so I could figure out how it works and be prepared to use it in 
+the future. An open standard risc architecture is really appealing. Not having to pay license fees to ARM is a big deal.
+
+It has been 20 years since I took operating systems theory in college, so this is a fun intellectual exercise to re-learn these concepts.
 
 Rust has a pre-defined target for riscv 64 bit that matches what we need for the Milk-V Mars.
-<pre>rustup target add riscv64gc-unknown-none-elf</pre>
+````
+rustup target add riscv64gc-unknown-none-elf
+````
 The target specifies the architecture, the operating system, and the binary format.
 The project can be built with the following command:
-<pre>cargo build --target riscv64gc-unknown-none-elf</pre>
+````
+cargo build --target riscv64gc-unknown-none-elf
+````
 
 The project defines a [.cargo/config.toml](.cargo/config.toml) file that helps define 
 the target and linker script. The linker script is necessary to set the start address 
