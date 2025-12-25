@@ -66,6 +66,35 @@ Hello from my rust kernel on JH7110
 
 Exit qemu with `ctrl + a` then `x`
 
+#### Running on hardware
+We need build and development tools to `make` opensbi.
+```
+sudo dnf group install development-tools gawk
+```
+
+We also need to setup the cross compile toolchain.
+```
+sudo dnf install gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu
+```
+
+Clone [opensbi](https://github.com/riscv-software-src/opensbi)
+```
+git clone git@github.com:riscv-software-src/opensbi.git
+```
+
+```
+cd opensbi
+export CROSS_COMPILE=riscv64-linux-gnu-
+make PLATFORM=generic FW_PAYLOAD_PATH=../milkv-mars-os/target/riscv64gc-unknown-none-elf/release/milkv_mars_os
+```
+If everything builds correctly, you should see a file named `build/platform/generic/firmware/fw_payload.elf`
+
+Copy this `fw_payload.elf` to the SD card and from uboot, try
+```
+fatload mmc 1:1 $kernel_addr_r fw_payload.elf
+go $kernel_addr_r
+```
+
 #### Notes
 On Fedora 43 in wsl, I see this issue where WSL interop stops working after a reboot. You can fix it by running the following commands:
 ````
