@@ -67,6 +67,34 @@ Hello from my rust kernel on JH7110
 Exit qemu with `ctrl + a` then `x`
 
 #### Running on hardware
+The most reliable way I have found to run the rust program on the milkv mars is to run the binary with `go addr` from uboot.
+
+First install
+```
+rustup component add llvm-tools-preview
+cargo install cargo-binutils
+```
+
+Copy the binary from the elf release package and put that on the sd card.
+
+```
+cargo objcopy --release -- -O binary target/riscv64gc-unknown-none-elf/release/milkv_mars_os.bin
+```
+
+<pre>
+StarFive # fatload mmc 1:1 0x80200000 milkv_mars_os.bin
+Sent: fatload mmc 1:1 0x80200000 milkv_mars_os.bin
+fatload mmc 1:1 0x80200000 milkv_mars_os.bin
+224 bytes read in 8 ms (27.3 KiB/s)
+StarFive # go 0x80200000
+Sent: go 0x80200000
+go 0x80200000
+## Starting application at 0x80200000 ...
+Hello from Rust kernel on JH7110!
+Milk-V Mars is running!
+</pre>
+
+#### Building OpenSBI
 We need build and development tools to `make` opensbi.
 ```
 sudo dnf group install development-tools gawk
@@ -103,3 +131,7 @@ sudo sh -c 'echo :WSLInterop:M::MZ::/init:PF > /usr/lib/binfmt.d/WSLInterop.conf
 ````
 sudo systemctl restart systemd-binfmt
 ````
+
+I need to figure out how to fix the errant terminal resize characters being printed on the terminal.
+^[[61;120R
+
