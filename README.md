@@ -30,8 +30,7 @@ Use the release flag, `--release`
 
 I haven't tried to attach a a debugger yet, so that is TBD.
 
-Qemu is great for fast iteration and e2e testing. I haven't run it on the Milk-V Mars yet, 
-but I think I know how to do it. That is the next TODO.
+Qemu is great for fast iteration and e2e testing.
 
 I'm using Fedora 43 in WSL so all the commands make that assumption, unless otherwise stated.
 
@@ -46,22 +45,25 @@ sudo dnf install qemu-system-riscv
 qemu-system-riscv64 --version
 ````
 
-The kernel for now only works in Machine mode and simply prints out a Hello World message. You can run the kernel with or without OpenSBI.
-A TODO for me is to figure out how to build an OpenSBI + Uboot package with the kernel. The command below skips OpenSBI `-bios none`
+The kernel for now only works in Machine mode and simply prints out Hello World messages. I haven't successfully run my program with OpenSBI.
+A TODO for me is to figure out how to build an OpenSBI + Uboot package with the kernel. The command below skips OpenSBI `-bios none`. You'll need to set `smp 1` for now. On the milkv mars, not all the cores will be used for running the program, but on qemu you can set `smp 1`. With smp 4, the program will run on all cores simultaenously which is not great.
+
+Use the binary obj as the kernel argument. See below for how to extract that from the elf file.
 
 ````
 qemu-system-riscv64 \
   -machine virt \
-  -smp 4 \
+  -smp 1 \
   -m 4G \
   -nographic \
   -bios none \
-  -kernel target/riscv64gc-unknown-none-elf/release/milkv_mars_os
+  -kernel target/riscv64gc-unknown-none-elf/release/milkv_mars_os.bin
 ````
 
 Expected output:
 <pre>
-Hello from my rust kernel on JH7110
+Hello from Rust kernel on JH7110!
+Milk-V Mars is running!
 </pre>
 
 Exit qemu with `ctrl + a` then `x`
@@ -80,7 +82,12 @@ Copy the binary from the elf release package and put that on the sd card.
 ```
 cargo objcopy --release -- -O binary target/riscv64gc-unknown-none-elf/release/milkv_mars_os.bin
 ```
-
+```
+fatload mmc 1:1 0x80200000 milkv_mars_os.bin
+```
+```
+go 0x80200000
+```
 <pre>
 StarFive # fatload mmc 1:1 0x80200000 milkv_mars_os.bin
 Sent: fatload mmc 1:1 0x80200000 milkv_mars_os.bin
